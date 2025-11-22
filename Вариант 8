@@ -1,0 +1,53 @@
+class Item:
+    def __init__(self,name,code,w,v):
+        self.name=name
+        self.code=code
+        self.w=w
+        self.v=v
+items = [
+    Item("rifle",     "r", 3, 25),
+    Item("pistol",    "p", 2, 15),
+    Item("ammo",      "a", 2, 15),
+    Item("medkit",    "m", 2, 20),
+    Item("knife",     "k", 1, 15),
+    Item("axe",       "x", 3, 20),
+    Item("talisman",  "t", 1, 25),
+    Item("flask",     "f", 1, 15),
+    Item("antidote",  "d", 1, 10),
+    Item("supplies",  "s", 2, 20),
+    Item("crossbow",  "c", 2, 20)
+]
+max_w=8
+start_score=0
+best_choice=[]
+chosen=[0]*len(items)
+def dfs(i,current_w,current_v):
+    global start_score,best_choice
+    if current_w>max_w:
+        return
+    if i==len(items):
+        if current_v>start_score :
+            start_score=current_v
+            best_choice=chosen.copy()#保存当前选择
+        return
+    chosen[i]=1
+    dfs(i+1,current_w+items[i].w,current_v+items[i].v)
+    chosen[i]=0
+    dfs(i+1,current_w,current_v-items[i].v)
+dfs(0,0,5)
+print(start_score)
+print(best_choice)
+code_main=['i']
+for i in range(len(items)):
+    if best_choice[i]==1:
+        code_main.append(items[i].code)
+print(' '.join(code_main))
+cells=["i"]
+for i in range(len(items)):
+    if best_choice[i]==1:
+        cells.extend(items[i].code*items[i].w)
+while len(cells)<9:
+    cells.append('.')
+grid=[cells[0:3],cells[3:6],cells[6:9]]
+for row in grid:
+    print(' '.join(row))
