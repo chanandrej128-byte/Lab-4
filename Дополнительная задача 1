@@ -1,0 +1,47 @@
+class Item:
+    def __init__(self,name,code,w,v):
+        self.name=name
+        self.code=code
+        self.w=w
+        self.v=v
+items = [
+    Item("rifle",     "r", 3, 25),
+    Item("pistol",    "p", 2, 15),
+    Item("ammo",      "a", 2, 15),
+    Item("medkit",    "m", 2, 20),
+    Item("knife",     "k", 1, 15),
+    Item("axe",       "x", 3, 20),
+    Item("talisman",  "t", 1, 25),
+    Item("flask",     "f", 1, 15),
+    Item("antidote",  "d", 1, 10),
+    Item("supplies",  "s", 2, 20),
+    Item("crossbow",  "c", 2, 20)
+]
+max_w2 = 6
+
+chosen = []
+choice_2 = [0] * len(items)
+
+chose_main=[]
+def dfs(i, current_w2, current_v2):
+    global score, chosen,chose_main
+    if current_w2 > max_w2:
+        return
+    if i == len(items) and current_w2 >0:
+
+
+
+            chosen = choice_2.copy()
+            chose_main.append(chosen)
+    return
+    choice_2[i] = 1
+    dfs(i + 1, current_w2 + items[i].w, current_v2 + items[i].v)
+    choice_2[i] = 0
+    dfs(i + 1, current_w2, current_v2 - items[i].v)
+
+
+dfs(0, 0, 5)
+if len(chose_main) !=0:
+    print(chose_main)
+else:
+    print("no choice")
