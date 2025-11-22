@@ -1,0 +1,56 @@
+class Item:
+    def __init__(self,name,code,w,v):
+        self.name=name
+        self.code=code
+        self.w=w
+        self.v=v
+items = [
+    Item("rifle",     "r", 3, 25),
+    Item("pistol",    "p", 2, 15),
+    Item("ammo",      "a", 2, 15),
+    Item("medkit",    "m", 2, 20),
+    Item("knife",     "k", 1, 15),
+    Item("axe",       "x", 3, 20),
+    Item("talisman",  "t", 1, 25),
+    Item("flask",     "f", 1, 15),
+    Item("antidote",  "d", 1, 10),
+    Item("supplies",  "s", 2, 20),
+    Item("crossbow",  "c", 2, 20)
+]
+max_w=8
+
+best_choice=[]
+chosen=[0]*len(items)
+chose_all=[]
+
+names_all=[]
+scores_all=[]
+def dfs(i,current_w,current_v):
+    global chose_all,things
+    if current_w>max_w:
+        return
+    if i==len(items):
+        if current_v>0:
+            best_choice=chosen.copy()
+            chose_all.append(best_choice)
+            combo_names=[]
+
+            for i in range(len(chosen)):
+                if chosen[i]==1:
+                    combo_names.append(items[i].name)
+
+            names_all.append(combo_names)
+            scores_all.append(current_v)
+
+        return
+    chosen[i] = 1
+    dfs(i + 1, current_w + items[i].w, current_v + items[i].v)
+    chosen[i] = 0
+    dfs(i + 1, current_w, current_v - items[i].v)
+dfs(0,0,5)
+if len(chose_all)>0:
+    print("yes",len(chose_all))
+    for vec,names,score in zip(chose_all,names_all,scores_all):
+        print(vec,names,score)
+else:
+    print('no')
