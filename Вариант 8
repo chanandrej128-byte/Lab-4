@@ -34,7 +34,7 @@ def dfs(i,current_w,current_v):
     dfs(i+1,current_w+items[i].w,current_v+items[i].v)
     chosen[i]=0
     dfs(i+1,current_w,current_v-items[i].v)
-dfs(0,0,5)
+dfs(0,0,20)
 print(start_score)
 print(best_choice)
 code_main=['i']
